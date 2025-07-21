@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de estudio Sistemas y Organizaciones</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .nav-link.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-button.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Estilos para Flashcards */
+        .flashcard-container {
+            perspective: 1000px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .flashcard-front {
+            background-color: white;
+            color: #1f2937;
+        }
+
+        .flashcard-back {
+            background-color: #3b82f6;
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* Estilos para Quiz */
+        .quiz-option {
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+            border: 2px solid #e5e7eb;
+        }
+
+        .quiz-option.correct {
+            background-color: #dcfce7 !important;
+            color: #166534;
+            border-color: #22c55e;
+        }
+
+        .quiz-option.incorrect {
+            background-color: #fee2e2 !important;
+            color: #991b1b;
+            border-color: #ef4444;
+        }
+
+        .quiz-option:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <aside class="w-full md:w-64 bg-gray-800 text-white p-4 md:p-6 shadow-lg md:fixed md:h-full overflow-y-auto">
+            <h1 class="text-2xl font-bold mb-6 border-b border-gray-600 pb-4">Sistemas y Organizaciones</h1>
+            <nav>
+                <ul id="navigation" class="space-y-2">
+                    <li><a href="#" data-target="unit1"
+                            class="nav-link block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Unidad
+                            1: Organizaciones</a></li>
+                    <li><a href="#" data-target="unit2"
+                            class="nav-link block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Unidad
+                            2: Teoría de Sistemas</a></li>
+                    <li><a href="#" data-target="unit3"
+                            class="nav-link block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Unidad
+                            3: Administración</a></li>
+                    <li><a href="#" data-target="unit4"
+                            class="nav-link block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Unidad
+                            4: Decisiones</a></li>
+                    <li><a href="#" data-target="unit5"
+                            class="nav-link block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Unidad
+                            5: Sistemas de Info.</a></li>
+                    <li class="border-t border-gray-600 my-4 pt-4"></li>
+                    <li><a href="#" data-target="flashcards"
+                            class="nav-link block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Flashcards
+                            de Repaso</a></li>
+                    <li><a href="#" data-target="quiz"
+                            class="nav-link block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Autoevaluación
+                            (Quiz)</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="flex-1 md:ml-64 p-4 md:p-8 lg:p-12">
+
+            <!-- Bienvenida -->
+            <section id="welcome" class="content-section">
+                <div class="bg-white p-8 rounded-lg shadow-md text-center">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Guía de Estudio para SyO</h2>
+                    <p class="text-lg text-gray-600">Bienvenido a tu guía de estudios para el final de Sistemas y
+                        Organizaciones.</p>
+                    <p class="mt-2 text-gray-500">Selecciona una unidad o una herramienta de estudio en el menú para
+                        comenzar.</p>
+                </div>
+            </section>
+
+            <!-- Unidad 1 -->
+            <section id="unit1" class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">Unidad 1: Introducción a las Organizaciones y la
+                    Administración</h2>
+                <div class="space-y-4 accordion-container">
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Empresa y Organización: Conceptos y Diferencias</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t">
+                                <h3 class="font-semibold text-blue-600">Empresa</h3>
+                                <p class="mt-1 mb-3">Una unidad económico-social en la que, a través del capital, el
+                                    trabajo y la coordinación de recursos, se producen bienes y/o servicios para
+                                    satisfacer las necesidades de la sociedad. Es la célula de la actividad económica.
+                                </p>
+                                <h3 class="font-semibold text-blue-600">Organización</h3>
+                                <p class="mt-1 mb-3">Un conjunto de personas y recursos ordenados según una estructura
+                                    para lograr un objetivo común. Incluye empresas, ONGs, organismos públicos, etc. Es
+                                    una unidad social deliberadamente construida para alcanzar fines específicos.</p>
+                                <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4 rounded-r-lg">
+                                    <p class="font-bold">Diferencia Clave</p>
+                                    <p>La empresa <strong class="underline">siempre</strong> tiene fines de lucro
+                                        (ganancia económica), mientras que una organización puede no tenerlos (ej. una
+                                        ONG o un hospital público). Toda empresa es una organización, pero no toda
+                                        organización es una empresa.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Clasificación -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Clasificación de Organizaciones</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t space-y-3">
+                                <div>
+                                    <h4 class="font-semibold text-blue-600">1. Según su Actividad Económica:</h4>
+                                    <ul class="list-disc list-inside ml-4 mt-1 text-gray-700">
+                                        <li><strong>Sector Primario (Industriales Extractivas):</strong> Explotación de
+                                            recursos naturales (minería, pesca, agro).</li>
+                                        <li><strong>Sector Secundario (Industriales Manufactureras):</strong>
+                                            Transformación industrial de materias primas (textiles, automotrices).</li>
+                                        <li><strong>Sector Terciario (Comerciales y de Servicios):</strong>
+                                            Intermediación, venta y prestación de servicios (transporte, salud,
+                                            educación, outsourcing).</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-blue-600">2. Según el Origen del Capital:</h4>
+                                    <ul class="list-disc list-inside ml-4 mt-1 text-gray-700">
+                                        <li><strong>Públicas:</strong> Capital estatal/gubernamental.</li>
+                                        <li><strong>Privadas:</strong> Capital de particulares (pueden ser nacionales,
+                                            extranjeras, multinacionales, familiares, etc.).</li>
+                                        <li><strong>Mixtas:</strong> Combinación de capital público y privado.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-blue-600">3. Según su Tamaño:</h4>
+                                    <ul class="list-disc list-inside ml-4 mt-1 text-gray-700">
+                                        <li><strong>Microempresa:</strong> Muy pequeña, a menudo individual o familiar
+                                            (hasta 10 empleados).</li>
+                                        <li><strong>Pequeña y Mediana Empresa (PyME):</strong> Agrupadas comúnmente, con
+                                            ventajas legales para su fomento.</li>
+                                        <li><strong>Gran Empresa:</strong> Alta complejidad organizativa y gran volumen
+                                            de ventas o empleados.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--   Gerentes y Cultura -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Los Gerentes y la Cultura Organizacional</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t space-y-3">
+                                <h4 class="font-semibold text-blue-600">Gerente</h4>
+                                <p>Alguien que coordina y supervisa el trabajo de otras personas para lograr los
+                                    objetivos de la empresa. Su trabajo es ayudar a otros a realizar su labor.</p>
+                                <h4 class="font-semibold text-blue-600">Habilidades Gerenciales (según Mintzberg)</h4>
+                                <ul class="list-disc list-inside ml-4 mt-1">
+                                    <li><strong>Técnicas:</strong> Conocimiento específico del trabajo. Más importante
+                                        en niveles bajos.</li>
+                                    <li><strong>Humanas:</strong> Capacidad de trabajar bien con otras personas. Muy
+                                        importante en todos los niveles.</li>
+                                    <li><strong>Conceptuales:</strong> Habilidad para pensar y conceptualizar
+                                        situaciones complejas. Más importante en niveles altos.</li>
+                                </ul>
+                                <h4 class="font-semibold text-blue-600">Cultura Organizacional</h4>
+                                <p>Conjunto de valores, principios, tradiciones y formas de hacer las cosas que influyen
+                                    en cómo actúan los miembros de una organización. Es la "personalidad" de la empresa.
+                                    Limita lo que un gerente puede o no hacer, a menudo de forma no escrita.</p>
+                                <div
+                                    class="bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-r-lg mt-2">
+                                    <p><strong class="font-bold">Visión Omnipotente vs. Simbólica:</strong> La visión
+                                        omnipotente asume que los gerentes son directamente responsables del éxito o
+                                        fracaso. La visión simbólica argumenta que la capacidad de un gerente está
+                                        restringida por factores externos que no controla (economía, acciones de
+                                        competidores, etc.).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unidad 2 -->
+            <section id="unit2" class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">Unidad 2: La Teoría de Sistemas y la Organización como
+                    Sistema</h2>
+                <div class="space-y-4 accordion-container">
+                    <!-- Acordeón: Enfoques -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Enfoque Reduccionista vs. Enfoque de Sistemas</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t">
+                                <h3 class="font-semibold text-blue-600">Enfoque Reduccionista (Mecanicista)</h3>
+                                <p class="mt-1 mb-3">Analiza un fenómeno complejo descomponiéndolo en sus partes más
+                                    pequeñas y estudiándolas por separado. Asume que entendiendo cada parte aislada se
+                                    entiende el todo. Es útil para sistemas simples, pero ignora las interacciones y el
+                                    contexto.</p>
+                                <h3 class="font-semibold text-blue-600">Enfoque de Sistemas</h3>
+                                <p class="mt-1 mb-3">Propone que los fenómenos solo se explican considerando el todo (la
+                                    totalidad) y las interrelaciones de sus partes en un contexto. Un sistema no es solo
+                                    la suma de sus partes. Tiene una visión dinámica, sintética e integral.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Acordeón: Teoría General de Sistemas -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Teoría General de Sistemas (TGS)</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t space-y-3">
+                                <p>Fundada por Ludwig Von Bertalanffy, busca una metodología integradora para ciencias
+                                    diversas. Plantea principios aplicables a cualquier sistema.</p>
+                                <h4 class="font-semibold text-blue-600">Concepto de Sistema</h4>
+                                <p class="mb-2">Un conjunto de elementos interrelacionados que funcionan como un todo
+                                    para un propósito u objetivo común.</p>
+                                <div class="bg-gray-50 p-3 rounded-lg border">
+                                    <h5 class="font-semibold">Componentes de un Sistema:</h5>
+                                    <ul class="list-disc list-inside ml-4 mt-1">
+                                        <li><strong>Entidades:</strong> Componentes del sistema (objetos, personas).
+                                        </li>
+                                        <li><strong>Atributos:</strong> Propiedades de las entidades.</li>
+                                        <li><strong>Relaciones:</strong> Vínculos o interacciones entre entidades.</li>
+                                        <li><strong>Ambiente:</strong> Todo lo externo al sistema que influye en él.
+                                        </li>
+                                        <li><strong>Objetivo:</strong> El fin o propósito del sistema.</li>
+                                    </ul>
+                                </div>
+                                <h4 class="font-semibold text-blue-600">Propiedades Comunes de los Sistemas</h4>
+                                <ul class="list-disc list-inside ml-4 mt-1">
+                                    <li><strong>Totalidad:</strong> El sistema reacciona globalmente a cualquier
+                                        estímulo.</li>
+                                    <li><strong>Entropía:</strong> Tendencia natural al desgaste y desorden. Los
+                                        sistemas abiertos pueden combatirla (neguentropía).</li>
+                                    <li><strong>Sinergia:</strong> El todo es más que la suma de sus partes. "2+2=5".
+                                    </li>
+                                    <li><strong>Recursividad:</strong> Todo sistema está integrado en un sistema más
+                                        grande (suprasistema) y a su vez puede contener sistemas más pequeños
+                                        (subsistemas).</li>
+                                    <li><strong>Homeostasis:</strong> Tendencia a mantener un equilibrio interno
+                                        dinámico.</li>
+                                </ul>
+                                <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4 rounded-r-lg">
+                                    <p class="font-bold">Sistema Abierto vs. Cerrado</p>
+                                    <p>Un sistema <strong>abierto</strong> intercambia materia, energía o información
+                                        con su entorno (ej: una empresa). Un sistema <strong>cerrado</strong> no tiene
+                                        intercambio (ej: una reacción química en un recipiente sellado). Las
+                                        organizaciones son siempre sistemas abiertos.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unidad 3 -->
+            <section id="unit3" class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">Unidad 3: El Proceso de Administración y las Funciones
+                    de la Empresa</h2>
+                <div class="space-y-4 accordion-container">
+                    <!-- Acordeón: Proceso Administrativo -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>El Proceso Administrativo</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t">
+                                <p class="mb-4">Es el ciclo de actividades que realizan los administradores para lograr
+                                    los objetivos. Es un proceso cíclico y continuo.</p>
+                                <ol class="list-decimal list-inside space-y-2">
+                                    <li><strong>Planeamiento (Planificación):</strong> Definir objetivos, establecer
+                                        estrategias y desarrollar planes para coordinar actividades. <em>(Fase
+                                            mecánica/estática)</em></li>
+                                    <li><strong>Organización:</strong> Determinar qué es necesario realizar, cómo
+                                        llevarlo a cabo y con quién se cuenta para hacerlo. <em>(Fase
+                                            mecánica/estática)</em></li>
+                                    <li><strong>Dirección (Liderazgo):</strong> Motivar y dirigir al personal para
+                                        ejecutar los planes. <em>(Fase dinámica)</em></li>
+                                    <li><strong>Control:</strong> Dar seguimiento a las actividades para garantizar que
+                                        se logren conforme a lo planeado y corregir desviaciones. <em>(Fase
+                                            dinámica)</em></li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Acordeón: Funciones de Especialización -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Funciones de Especialización (Áreas Funcionales)</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t space-y-2">
+                                <p>Las organizaciones agrupan sus actividades en áreas especializadas que deben
+                                    coordinarse entre sí.</p>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li><strong>Producción/Operaciones y Adm. de Materiales:</strong> Transforma insumos
+                                        en bienes o servicios y gestiona la adquisición y control de materiales.</li>
+                                    <li><strong>Comercialización o Marketing:</strong> Promociona, vende y distribuye
+                                        los productos/servicios.</li>
+                                    <li><strong>Finanzas (y Contabilidad):</strong> Obtiene, gestiona y registra los
+                                        recursos monetarios.</li>
+                                    <li><strong>Recursos Humanos (RR.HH.):</strong> Gestiona el capital humano
+                                        (reclutamiento, capacitación, etc.).</li>
+                                    <li><strong>Sistemas o Informática (TI):</strong> Provee la infraestructura
+                                        tecnológica y de información.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Acordeón: Herramientas de Planeamiento -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Herramientas de Planeamiento</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t space-y-3">
+                                <h4 class="font-semibold text-blue-600">Planeamiento de Proyectos (Corto/Mediano Plazo)
+                                </h4>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li><strong>Diagrama de Gantt:</strong> Gráfico de barras que muestra las tareas en
+                                        un calendario. Visualiza la duración y secuencia.</li>
+                                    <li><strong>Método PERT:</strong> Red de tareas que modela dependencias. Usa tiempos
+                                        probabilísticos (optimista, probable, pesimista) para calcular la duración
+                                        esperada e identificar el "camino crítico".</li>
+                                    <li><strong>Kanban / Trello:</strong> Método visual para gestionar tareas en
+                                        tableros, limitando el trabajo en proceso y mejorando el flujo.</li>
+                                </ul>
+                                <h4 class="font-semibold text-blue-600">Planeamiento Estratégico (Largo Plazo)</h4>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li><strong>Análisis FODA:</strong> Evalúa Fortalezas, Oportunidades, Debilidades y
+                                        Amenazas.</li>
+                                    <li><strong>Modelo de las 5 Fuerzas de Porter:</strong> Analiza la competitividad de
+                                        una industria (nuevos competidores, poder de proveedores, poder de compradores,
+                                        productos sustitutos, rivalidad).</li>
+                                    <li><strong>Cadena de Valor de Porter:</strong> Ve a la empresa como un conjunto de
+                                        actividades (primarias y de apoyo) que agregan valor al cliente.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unidad 4 -->
+            <section id="unit4" class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">Unidad 4: La Información en las Organizaciones y la
+                    Toma de Decisiones</h2>
+                <div class="space-y-4 accordion-container">
+                    <!-- Acordeón: Proceso de Toma de Decisiones -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Proceso de Toma de Decisiones</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t">
+                                <p class="mb-4">Es el proceso de identificar un problema y elegir una solución entre
+                                    varias alternativas. Las etapas son:</p>
+                                <ol class="list-decimal list-inside space-y-2">
+                                    <li><strong>Investigación (Inteligencia):</strong> Reconocer el problema, reunir
+                                        información y definirlo. Se analiza la factibilidad (técnica, operativa,
+                                        económica).</li>
+                                    <li><strong>Diseño:</strong> Desarrollar y explorar distintas alternativas de
+                                        solución viables.</li>
+                                    <li><strong>Elección:</strong> Evaluar las alternativas según criterios (costos,
+                                        beneficios, riesgos) y seleccionar la mejor.</li>
+                                    <li><strong>Revisión (Retroalimentación):</strong> Monitorear los resultados de la
+                                        decisión implementada para aprender y ajustar.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Acordeón: Tipos de Decisiones -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Tipos y Condiciones de las Decisiones</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t space-y-3">
+                                <h4 class="font-semibold text-blue-600">Según la Estructuración:</h4>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li><strong>Programadas (Estructuradas):</strong> Repetitivas y rutinarias. Existe
+                                        un procedimiento o regla predefinida (ej: reordenar stock).</li>
+                                    <li><strong>No Programadas (No Estructuradas):</strong> Novedosas y únicas. No hay
+                                        un procedimiento establecido. Requieren juicio y creatividad (ej: lanzar un
+                                        nuevo producto).</li>
+                                    <li><strong>Semiestructuradas:</strong> Combinan elementos de las dos anteriores.
+                                    </li>
+                                </ul>
+                                <h4 class="font-semibold text-blue-600">Según las Condiciones:</h4>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li><strong>Bajo Certeza:</strong> Se conoce con seguridad el resultado de cada
+                                        alternativa.</li>
+                                    <li><strong>Bajo Riesgo:</strong> Se conocen las probabilidades de los posibles
+                                        resultados. Se puede calcular un valor esperado.</li>
+                                    <li><strong>Bajo Incertidumbre:</strong> No se conocen las probabilidades de los
+                                        resultados. Se aplican criterios como Maximin (pesimista), Maximax (optimista),
+                                        etc.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Acordeón: Dato, Información, Conocimiento -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Dato, Información y Conocimiento</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t space-y-3">
+                                <p><strong>Dato:</strong> Un hecho bruto, aislado, que por sí solo tiene poco
+                                    significado (ej: "42").</p>
+                                <p><strong>Información:</strong> Datos procesados, organizados o puestos en contexto
+                                    para que adquieran significado y sean útiles para reducir la incertidumbre (ej: "42
+                                    ventas fueron concretadas").</p>
+                                <p><strong>Conocimiento:</strong> Información que ha sido asimilada y entendida,
+                                    integrada con la experiencia, para guiar decisiones futuras. Es información
+                                    aplicada.</p>
+                                <h4 class="font-semibold text-blue-600 mt-2">Calidad de la Información</h4>
+                                <p>Para ser valiosa, la información debe tener calidad. Sus dimensiones son:</p>
+                                <ul class="list-disc list-inside ml-4 text-sm grid grid-cols-2 gap-1">
+                                    <li>Exactitud</li>
+                                    <li>Relevancia</li>
+                                    <li>Oportunidad</li>
+                                    <li>Integridad</li>
+                                    <li>Accesibilidad</li>
+                                    <li>Seguridad</li>
+                                    <li>Confiabilidad</li>
+                                    <li>Comprensibilidad</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unidad 5 -->
+            <section id="unit5" class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">Unidad 5: Sistemas de Información - Introducción a su
+                    Administración</h2>
+                <div class="space-y-4 accordion-container">
+                    <!-- Acordeón: Concepto y Componentes de SI -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Concepto y Componentes de un Sistema de Información (SI)</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t">
+                                <p class="mb-4">Conjunto integrado de componentes que recolecta, procesa, almacena y
+                                    comunica información para apoyar las operaciones, la toma de decisiones y el control
+                                    en una organización.</p>
+                                <div class="bg-gray-50 p-3 rounded-lg border">
+                                    <h5 class="font-semibold">5 Componentes de un SI:</h5>
+                                    <ol class="list-decimal list-inside ml-4 mt-1">
+                                        <li><strong>Hardware:</strong> Equipos físicos (computadoras, servidores).</li>
+                                        <li><strong>Software:</strong> Programas y aplicaciones.</li>
+                                        <li><strong>Datos:</strong> La materia prima del sistema.</li>
+                                        <li><strong>Procedimientos:</strong> Reglas y políticas de operación.</li>
+                                        <li><strong>Personas:</strong> Usuarios y personal de TI.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Acordeón: Objetivos Estratégicos -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Objetivos Estratégicos de los SI</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t">
+                                <p>Las empresas invierten en SI para lograr seis objetivos clave:</p>
+                                <ol class="list-decimal list-inside space-y-1 mt-2">
+                                    <li><strong>Excelencia Operacional:</strong> Mejorar la eficiencia y productividad.
+                                    </li>
+                                    <li><strong>Nuevos Productos, Servicios y Modelos de Negocio:</strong> Fomentar la
+                                        innovación.</li>
+                                    <li><strong>Intimidad con Clientes y Proveedores:</strong> Mejorar las relaciones y
+                                        la lealtad.</li>
+                                    <li><strong>Mejorar la Toma de Decisiones:</strong> Proveer información oportuna y
+                                        de calidad.</li>
+                                    <li><strong>Ventaja Competitiva:</strong> Sobresalir sobre los competidores.</li>
+                                    <li><strong>Supervivencia:</strong> Cumplir con regulaciones o presiones del mercado
+                                        para seguir operando.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Clasificación de SI -->
+                    <div class="accordion-item bg-white rounded-lg shadow-md">
+                        <button
+                            class="accordion-button w-full text-left p-4 font-semibold text-lg flex justify-between items-center">
+                            <span>Clasificación de Sistemas de Información</span>
+                            <svg class="accordion-icon w-6 h-6 transition-transform duration-300" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="p-4 border-t space-y-3">
+                                <h4 class="font-semibold text-blue-600">Según el Nivel Organizacional que Apoyan:</h4>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li><strong>Sistemas de Procesamiento de Transacciones (TPS):</strong> Nivel
+                                        <strong>Operativo</strong>. Automatizan transacciones rutinarias (facturación,
+                                        nómina).
+                                    </li>
+                                    <li><strong>Sistemas de Información Gerencial (MIS):</strong> Nivel
+                                        <strong>Táctico/Medio</strong>. Brindan reportes y resúmenes periódicos.
+                                    </li>
+                                    <li><strong>Sistemas de Soporte a Decisiones (DSS):</strong> Nivel <strong>Táctico y
+                                            Directivo</strong>. Ayudan en decisiones semiestructuradas con análisis
+                                        interactivos ("¿qué pasa si...?").</li>
+                                    <li><strong>Sistemas de Información Ejecutiva (EIS/ESS):</strong> Nivel
+                                        <strong>Estratégico/Alto</strong>. Proveen indicadores clave y análisis muy
+                                        resumidos (dashboards).
+                                    </li>
+                                </ul>
+                                <h4 class="font-semibold text-blue-600">Sistemas Integrados e Interorganizacionales:
+                                </h4>
+                                <ul class="list-disc list-inside ml-4">
+                                    <li><strong>ERP (Planificación de Recursos Empresariales):</strong> Integran
+                                        múltiples funciones (finanzas, producción, RRHH) en una plataforma única.</li>
+                                    <li><strong>SCM (Gestión de la Cadena de Suministro):</strong> Conectan la empresa
+                                        con proveedores y distribuidores.</li>
+                                    <li><strong>CRM (Gestión de Relaciones con el Cliente):</strong> Integran
+                                        información de clientes para marketing, ventas y servicio.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Menú de Quiz -->
+            <section id="quiz" class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">Autoevaluación por Unidad</h2>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <p class="text-center text-lg mb-6">Selecciona la unidad que quieres evaluar:</p>
+                    <div id="quiz-menu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <button
+                            class="quiz-start-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-lg transition-transform transform hover:scale-105"
+                            data-unit="1">Unidad 1</button>
+                        <button
+                            class="quiz-start-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-lg transition-transform transform hover:scale-105"
+                            data-unit="2">Unidad 2</button>
+                        <button
+                            class="quiz-start-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-lg transition-transform transform hover:scale-105"
+                            data-unit="3">Unidad 3</button>
+                        <button
+                            class="quiz-start-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-lg transition-transform transform hover:scale-105"
+                            data-unit="4">Unidad 4</button>
+                        <button
+                            class="quiz-start-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-lg transition-transform transform hover:scale-105"
+                            data-unit="5">Unidad 5</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contenedor del Juego de Quiz -->
+            <section id="quiz-game" class="content-section">
+                <div class="bg-white p-6 rounded-lg shadow-md max-w-4xl mx-auto">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 id="quiz-title" class="text-2xl font-bold"></h2>
+                        <span id="quiz-progress" class="font-semibold text-gray-600"></span>
+                    </div>
+                    <div id="question-container" class="mb-6">
+                        <p id="question-text" class="text-xl mb-4"></p>
+                        <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                    </div>
+                    <div id="feedback-container" class="text-center font-bold my-4 h-6"></div>
+                    <div id="quiz-game-results" class="hidden text-center">
+                        <h3 class="text-3xl font-bold mb-4">¡Cuestionario Finalizado!</h3>
+                        <p id="final-score" class="text-2xl mb-6"></p>
+                        <button id="restart-quiz-btn"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg mr-2">Reintentar</button>
+                        <button id="back-to-menu-btn"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg">Volver al
+                            Menú</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="flashcards" class="content-section">
+                <h2 class="text-3xl font-bold mb-6 text-gray-900">Flashcards de Repaso</h2>
+                <div class="max-w-2xl mx-auto">
+                    <div id="flashcard-container" class="flashcard-container mb-4">
+                        <div class="flashcard" id="flashcard">
+                            <div class="flashcard-face flashcard-front">
+                                <p id="flashcard-term" class="text-2xl font-semibold text-center"></p>
+                            </div>
+                            <div class="flashcard-face flashcard-back">
+                                <p id="flashcard-definition" class="text-center"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button id="prev-card"
+                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">Anterior</button>
+                        <span id="card-counter" class="text-gray-600"></span>
+                        <button id="next-card"
+                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">Siguiente</button>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="mt-12 text-center text-xs text-gray-500">
+                <p>Nota: Esta página es una guía de estudio interactiva sin fines de lucro, creada para facilitar el
+                    repaso de los contenidos de la materia Sistemas y Organizaciones (Cursada 2025) de la Universidad
+                    Nacional de la Patagonia San Juan Bosco.</p>
+            </footer>
+
+        </main>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const flashcardData = [
+            { term: "Empresa", definition: "Unidad económico-social que, mediante capital, trabajo y coordinación de recursos, produce bienes y/o servicios con fines de lucro." },
+            { term: "Organización", definition: "Conjunto de personas y recursos estructurados para alcanzar un objetivo común; puede o no perseguir lucro." },
+            { term: "Globalización", definition: "Innumerables relaciones que establecen grupos de países para realizar intercambios económicos, generando un intercambio a nivel mundial." },
+            { term: "Sistema", definition: "Conjunto de componentes que interactúan para alcanzar un objetivo común." },
+            { term: "Sistema Abierto", definition: "Sistema que intercambia información, energía o materia con su entorno. Las organizaciones son sistemas abiertos." },
+            { term: "Sinergia", definition: "Propiedad de todos los sistemas que generalmente se expresa como '2+2=5', ya que el examen de sus partes en forma aislada no puede explicar o predecir su comportamiento." },
+            { term: "Entropía", definition: "Propiedad de todos los sistemas que destaca la existencia de una tendencia al desgaste y a la desintegración." },
+            { term: "Recursividad", definition: "Principio que establece que todo sistema es parte de un suprasistema y, a su vez, puede estar compuesto por subsistemas." },
+            { term: "Equifinalidad", definition: "Propiedad de los sistemas abiertos que indica que un sistema puede lograr sus objetivos empleando diferentes estrategias o caminos." },
+            { term: "Proceso Administrativo", definition: "Ciclo de planificación, organización, dirección y control que realizan los administradores para lograr los objetivos." },
+            { term: "Cadena de Valor", definition: "Modelo de Michael Porter que ve a la empresa como un conjunto de actividades primarias y de apoyo que agregan valor al producto/servicio." },
+            { term: "Decisión Programada", definition: "Decisión repetitiva y rutinaria para la cual la organización ya tiene un procedimiento o regla establecida." },
+            { term: "Decisión No Programada", definition: "Decisión novedosa y no rutinaria que se presenta en situaciones únicas, donde no existe un procedimiento." },
+            { term: "Sistema de Información (SI)", definition: "Conjunto integrado de hardware, software, datos, procedimientos y personas que procesa datos y provee información útil para la toma de decisiones y el control." },
+            { term: "TPS (Sistema de Procesamiento de Transacciones)", definition: "Sistema que automatiza las transacciones básicas y rutinarias de la organización a nivel operativo." },
+            { term: "MIS (Sistema de Información Gerencial)", definition: "Sistema que brinda reportes y resúmenes periódicos a los mandos medios (nivel táctico) para planificación y control." },
+            { term: "DSS (Sistema de Soporte a Decisiones)", definition: "Sistema que ayuda a los gerentes en decisiones no rutinarias o semiestructuradas, a menudo con análisis 'qué pasa si...'." },
+            { term: "EIS / ESS (Sistema de Información Ejecutiva)", definition: "Sistema orientado a la alta dirección que provee indicadores clave y análisis muy resumidos en dashboards." },
+            { term: "ERP (Planificación de Recursos Empresariales)", definition: "Suite de software que integra múltiples funciones de la empresa (finanzas, RRHH, etc.) en una plataforma unificada." },
+            { term: "CRM (Gestión de Relaciones con el Cliente)", definition: "Sistema que integra toda la información de los clientes para mejorar las áreas de marketing, ventas y servicio postventa." },
+            { term: "SCM (Gestión de la Cadena de Suministro)", definition: "Sistema que conecta a la empresa con sus proveedores y distribuidores para optimizar los flujos de insumos y productos." },
+            { term: "FODA", definition: "Herramienta de planeamiento estratégico que analiza las Fortalezas, Oportunidades, Debilidades y Amenazas de una organización." }
+        ];
+
+        const quizData = {
+            unit1: [
+                { question: "Un hospital público, según su fin, se clasifica como:", options: ["Empresa", "Organización sin fines de lucro", "Empresa mixta", "Organización con fines de lucro"], answer: "Organización sin fines de lucro" },
+                { question: "La capacidad de un gerente para pensar y conceptualizar situaciones abstractas y complejas es una habilidad:", options: ["Técnica", "Humana", "Conceptual", "Operativa"], answer: "Conceptual" },
+                { question: "La visión de la administración que considera que el éxito o fracaso de una organización se debe en gran parte a fuerzas externas fuera del control de los gerentes se llama:", options: ["Visión Omnipotente", "Visión Simbólica", "Visión Holística", "Visión Reduccionista"], answer: "Visión Simbólica" },
+                { question: "Una empresa internacional que centraliza la administración y otras decisiones en su país de origen es una:", options: ["Empresa Multinacional", "Empresa Global", "Empresa Transnacional", "Empresa Multidoméstica"], answer: "Empresa Global" },
+                { question: "El conjunto de valores, prácticas y creencias que son la razón de ser de la organización se denomina:", options: ["Estructura Organizacional", "Cultura Organizacional", "Proceso Administrativo", "Medio Específico"], answer: "Cultura Organizacional" },
+                { question: "La 'sociedad del conocimiento' valora como activo principal:", options: ["El capital y la tierra", "La maquinaria industrial", "El saber y el conocimiento", "La fuerza de trabajo no calificada"], answer: "El saber y el conocimiento" }
+            ],
+            unit2: [
+                { question: "La tendencia natural de los sistemas al desgaste y la desintegración se denomina:", options: ["Sinergia", "Homeostasis", "Entropía", "Recursividad"], answer: "Entropía" },
+                { question: "Una organización que se adapta a los cambios del entorno, intercambiando información y recursos, es un ejemplo de sistema:", options: ["Cerrado", "Mecanicista", "Abierto", "Determinista"], answer: "Abierto" },
+                { question: "El tipo de jerarquía de autoridad que asesora y brinda conocimiento especializado a un directivo, sin tener mando directo, es:", options: ["Lineal", "Funcional", "Staff", "Administrativa"], answer: "Staff" },
+                { question: "La propiedad que indica que un sistema puede lograr sus objetivos a través de diferentes caminos o estrategias es:", options: ["Equifinalidad", "Morfogénesis", "Totalidad", "Entropía"], answer: "Equifinalidad" },
+                { question: "El enfoque que analiza un fenómeno descomponiéndolo en sus partes más pequeñas para estudiarlas por separado se llama:", options: ["Enfoque de Sistemas", "Enfoque Holístico", "Enfoque Reduccionista", "Enfoque Integral"], answer: "Enfoque Reduccionista" }
+            ],
+            unit3: [
+                { question: "¿Cuál de las siguientes es considerada una actividad primaria en la Cadena de Valor de Porter?", options: ["Desarrollo de Tecnología", "Recursos Humanos", "Logística de Salida", "Infraestructura"], answer: "Logística de Salida" },
+                { question: "La etapa del Proceso Administrativo que se enfoca en motivar y guiar al personal es:", options: ["Planeamiento", "Organización", "Dirección", "Control"], answer: "Dirección" },
+                { question: "Un presupuesto que expresa cuantitativamente los recursos financieros para lograr los objetivos es una herramienta de la etapa de:", options: ["Organización", "Dirección", "Control", "Planeamiento"], answer: "Planeamiento" },
+                { question: "La finalidad del área de Finanzas incluye:", options: ["Solo registrar operaciones", "Promover y vender productos", "Obtener, invertir y asignar recursos monetarios", "Optimizar el talento del personal"], answer: "Obtener, invertir y asignar recursos monetarios" },
+                { question: "El modelo de Greiner describe el crecimiento de una organización a través de etapas que culminan en:", options: ["Crisis", "Sinergia", "Equilibrio", "Entropía"], answer: "Crisis" }
+            ],
+            unit4: [
+                { question: "Una decisión para la cual existe un procedimiento o regla predefinida se clasifica como:", options: ["No Programada", "De Riesgo", "Programada", "De Incertidumbre"], answer: "Programada" },
+                { question: "En el proceso de toma de decisiones, la etapa donde se desarrollan y exploran alternativas de solución es:", options: ["Investigación", "Diseño", "Elección", "Revisión"], answer: "Diseño" },
+                { question: "Si se conocen las probabilidades de ocurrencia de los distintos resultados posibles, la decisión se toma en condiciones de:", options: ["Certeza", "Riesgo", "Incertidumbre", "Conflicto"], answer: "Riesgo" },
+                { question: "Datos procesados, organizados y con un contexto que les da significado para el usuario, se definen como:", options: ["Conocimiento", "Hecho", "Dato", "Información"], answer: "Información" },
+                { question: "El análisis de factibilidad (técnica, operativa, económica) se realiza principalmente en la etapa de:", options: ["Elección", "Revisión", "Diseño", "Investigación"], answer: "Investigación" }
+            ],
+            unit5: [
+                { question: "Un sistema que provee indicadores clave a la alta dirección a través de dashboards se clasifica como:", options: ["TPS", "MIS", "DSS", "EIS / ESS"], answer: "EIS / ESS" },
+                { question: "El objetivo estratégico de los SI que se refiere a la necesidad de adoptarlos para cumplir con regulaciones o presiones del mercado es:", options: ["Ventaja Competitiva", "Excelencia Operacional", "Supervivencia", "Nuevos Productos"], answer: "Supervivencia" },
+                { question: "Un sistema que integra y automatiza los flujos de información entre una empresa, sus proveedores y distribuidores se denomina:", options: ["CRM", "ERP", "SCM", "KWS"], answer: "SCM" },
+                { question: "¿Cuál de los siguientes NO es uno de los 5 componentes de un Sistema de Información?", options: ["Hardware", "Software", "Estrategia", "Personas"], answer: "Estrategia" },
+                { question: "La capacidad de los sistemas de información para permitir que los empleados de niveles inferiores tomen decisiones se conoce como:", options: ["Outsourcing", "Benchmarking", "Empowerment", "Reingeniería"], answer: "Empowerment" }
+            ]
+        };
+
+
+        // --- LOGIC ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+
+            function switchTab(targetId) {
+                contentSections.forEach(section => section.classList.remove('active'));
+                navLinks.forEach(link => link.classList.remove('active'));
+                const targetSection = document.getElementById(targetId);
+                const targetLink = document.querySelector(`.nav-link[data-target="${targetId}"]`);
+                if (targetSection) targetSection.classList.add('active');
+                if (targetLink) targetLink.classList.add('active');
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    switchTab(e.currentTarget.getAttribute('data-target'));
+                });
+            });
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    button.classList.toggle('open');
+                    content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px";
+                });
+            });
+
+            // --- Flashcard 
+            const flashcard = document.getElementById('flashcard');
+            const termEl = document.getElementById('flashcard-term');
+            const definitionEl = document.getElementById('flashcard-definition');
+            const prevBtn = document.getElementById('prev-card');
+            const nextBtn = document.getElementById('next-card');
+            const counterEl = document.getElementById('card-counter');
+            let currentCardIndex = 0;
+
+            function renderFlashcard(index) {
+                if (!termEl) return;
+                termEl.textContent = flashcardData[index].term;
+                definitionEl.textContent = flashcardData[index].definition;
+                counterEl.textContent = `Tarjeta ${index + 1} de ${flashcardData.length}`;
+                flashcard.classList.remove('is-flipped');
+            }
+
+            if (flashcard) {
+                flashcard.addEventListener('click', () => flashcard.classList.toggle('is-flipped'));
+                prevBtn.addEventListener('click', () => {
+                    currentCardIndex = (currentCardIndex - 1 + flashcardData.length) % flashcardData.length;
+                    renderFlashcard(currentCardIndex);
+                });
+                nextBtn.addEventListener('click', () => {
+                    currentCardIndex = (currentCardIndex + 1) % flashcardData.length;
+                    renderFlashcard(currentCardIndex);
+                });
+                renderFlashcard(0);
+            }
+
+            // --- Quiz Game 
+            const quizMenu = document.getElementById('quiz-menu');
+            const quizGameSection = document.getElementById('quiz-game');
+            const quizTitle = document.getElementById('quiz-title');
+            const quizProgress = document.getElementById('quiz-progress');
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const quizGameResults = document.getElementById('quiz-game-results');
+            const finalScore = document.getElementById('final-score');
+            const restartQuizBtn = document.getElementById('restart-quiz-btn');
+            const backToMenuBtn = document.getElementById('back-to-menu-btn');
+
+            let currentQuizUnit = null;
+            let currentQuestionIndex = 0;
+            let score = 0;
+
+            function startQuiz(unit) {
+                currentQuizUnit = unit;
+                currentQuestionIndex = 0;
+                score = 0;
+                switchTab('quiz-game');
+                quizTitle.textContent = `Quiz: Unidad ${unit}`;
+                quizGameResults.classList.add('hidden');
+                feedbackContainer.textContent = '';
+                document.getElementById('question-container').classList.remove('hidden');
+                renderQuestion();
+            }
+
+            function renderQuestion() {
+                const questions = quizData[`unit${currentQuizUnit}`];
+                if (currentQuestionIndex >= questions.length) {
+                    showResults();
+                    return;
+                }
+                quizProgress.textContent = `Pregunta ${currentQuestionIndex + 1} / ${questions.length}`;
+                const q = questions[currentQuestionIndex];
+                questionText.textContent = q.question;
+                optionsContainer.innerHTML = '';
+                q.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('quiz-option', 'w-full', 'p-3', 'border-2', 'rounded-lg', 'text-left', 'hover:bg-gray-200', 'focus:outline-none', 'focus:ring-2', 'focus:ring-blue-400');
+                    button.onclick = () => selectAnswer(button, option, q.answer);
+                    optionsContainer.appendChild(button);
+                });
+            }
+
+            function selectAnswer(button, selected, correct) {
+                const buttons = optionsContainer.querySelectorAll('button');
+                buttons.forEach(btn => btn.disabled = true);
+
+                if (selected === correct) {
+                    button.classList.add('correct');
+                    feedbackContainer.textContent = '¡Correcto!';
+                    feedbackContainer.className = 'text-center font-bold my-4 h-6 text-green-600';
+                    score++;
+                } else {
+                    button.classList.add('incorrect');
+                    feedbackContainer.textContent = `Incorrecto. La respuesta era: ${correct}`;
+                    feedbackContainer.className = 'text-center font-bold my-4 h-6 text-red-600';
+                    buttons.forEach(btn => {
+                        if (btn.textContent === correct) {
+                            btn.classList.add('correct');
+                        }
+                    });
+                }
+
+                setTimeout(() => {
+                    currentQuestionIndex++;
+                    feedbackContainer.textContent = '';
+                    renderQuestion();
+                }, 2000);
+            }
+
+            function showResults() {
+                const questions = quizData[`unit${currentQuizUnit}`];
+                document.getElementById('question-container').classList.add('hidden');
+                quizGameResults.classList.remove('hidden');
+                const percentage = (score / questions.length) * 100;
+                finalScore.textContent = `Tu puntaje: ${score} de ${questions.length} (${percentage.toFixed(0)}%)`;
+                finalScore.className = `text-2xl mb-6 font-bold ${percentage >= 60 ? 'text-green-600' : 'text-red-600'}`;
+            }
+
+            if (quizMenu) {
+                quizMenu.addEventListener('click', e => {
+                    if (e.target.matches('.quiz-start-btn')) {
+                        startQuiz(e.target.dataset.unit);
+                    }
+                });
+            }
+
+            if (restartQuizBtn) restartQuizBtn.addEventListener('click', () => startQuiz(currentQuizUnit));
+            if (backToMenuBtn) backToMenuBtn.addEventListener('click', () => switchTab('quiz'));
+
+            switchTab('welcome');
+        });
+    </script>
+</body>
+
+</html>
